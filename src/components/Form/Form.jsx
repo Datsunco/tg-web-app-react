@@ -14,7 +14,7 @@ const Form = () => {
         const data = {
             city,
             street,
-            build
+            build,
         }
         tg.sendData(JSON.stringify(data));
     }, [])
@@ -24,7 +24,7 @@ const Form = () => {
         return () =>{
             tg.offEvent('mainButtonClicked', onSendData)
         }
-    })
+    },[])
 
     useEffect(() => {
         tg.MainButton.setParams({
