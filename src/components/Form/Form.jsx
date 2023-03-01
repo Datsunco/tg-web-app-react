@@ -70,6 +70,7 @@ const Form = () => {
             })
             .then(function(suggestions) {
                 setArticles(suggestions['suggestions']);
+                console.log(suggestions['suggestions']);
             })
             .catch(function(error) {
                 console.log(error);
