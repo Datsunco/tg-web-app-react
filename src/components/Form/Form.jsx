@@ -51,17 +51,25 @@ const Form = () => {
         }
     }, [street,city,build])
 
-    const onChangeCity = (e) => {
-        setCity(e.target.value);
+    const onChangeCity = (e, index) => {
+        var city_text = '';
+        //if Проверка на вызов функции из HTMl или из функции onClickAutoCompleteItem
+        if (index === 1) {
+            city_text = e.target.textContent;
+        }
+        else {
+            city_text = e.target.value
+        }
+        //end if
+        setCity(city_text);
 
-        const promise = suggest(e.target.value);
+        const promise = suggest(city_text);
         promise
             .then(function(response) {
                 return response.json();
             })
             .then(function(suggestions) {
                 setArticles(suggestions['suggestions']);
-                console.log(suggestions['suggestions']);
             })
             .catch(function(error) {
                 console.log(error);
@@ -90,6 +98,11 @@ const Form = () => {
         setBuild(e.target.value)
     }
 
+    const onClickAutoCompleteItem = (e) =>{
+        setCity(e.target.textContent);
+        onChangeCity(e, 1);
+    }
+
     return (
         <div className={'form'}>
             <h3>Введите ваши данные</h3>
@@ -99,12 +112,15 @@ const Form = () => {
                 type="text"
                 placeholder={'Город'}
                 value={city}
-                onChange={onChangeCity}
+                onChange={(e) => onChangeCity(e,0)}
             />
             <ul className={"autoComplete"}>
-                {Object.keys(articles).map(b => {
+                {Object.keys(articles).map(article => {
                     return(
-                        <li className={"autoCompleteItem"}>{articles[b]['value']}</li>
+                        <li className={"autoCompleteItem"}
+                            onClick={onClickAutoCompleteItem}>
+                            {articles[article]['value']}
+                        </li>
                     );
                 })}
             </ul>
