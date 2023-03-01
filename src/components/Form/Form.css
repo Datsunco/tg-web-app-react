@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 .form {
     display: flex;
     flex-direction: column;
@@ -6,6 +8,8 @@
     padding: 20px;
     position: relative;
     background: var(--tg-theme-secondary-bg-color);
+    font-family: 'Roboto', sans-serif;
+
 }
 
 .input {
@@ -17,6 +21,8 @@
     width: 100%;
     padding: 10px;
     margin-top: 15px;
+    font-family: 'Roboto', sans-serif;
+
 }
 
 .autoComplete{
@@ -32,10 +38,13 @@
     max-height: 240px;
     height: auto;
     overflow: auto;
+
 }
 
 .autoCompleteItem{
     padding: 10px;
+    font-family: 'Roboto', sans-serif;
+
 }
 
 .autoCompleteItem:hover{
