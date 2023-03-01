@@ -14,6 +14,7 @@ const Form = () => {
     const [city, setCity] = useState('');
     const [street, setStreet] = useState('');
     const [build, setBuild] = useState([]);
+    const [articles, setArticles] = useState([]);
     const {tg} = useTelegram();
 
 
@@ -52,16 +53,14 @@ const Form = () => {
 
     const onChangeCity = (e) => {
         setCity(e.target.value);
-        var obj;
-        var promise = suggest(e.target.value);
+
+        const promise = suggest(e.target.value);
         promise
             .then(function(response) {
                 return response.json();
             })
             .then(function(suggestions) {
-                //document.querySelector("#suggestions").innerHTML = JSON.stringify(suggestions, null, 4);
-                setBuild(suggestions['suggestions']);
-                //setBuild(JSON.parse(suggestions,null));
+                setArticles(suggestions['suggestions']);
                 console.log(suggestions['suggestions']);
             })
             .catch(function(error) {
@@ -102,28 +101,13 @@ const Form = () => {
                 value={city}
                 onChange={onChangeCity}
             />
-            <div>
-                {Object.keys(build).map(b => {
+            <ul className={"autoComplete"}>
+                {Object.keys(articles).map(b => {
                     return(
-                    //console.log(build[b]['value'])
-                        <p>{build[b]['value']}</p>
+                        <li className={"autoCompleteItem"}>{articles[b]['value']}</li>
                     );
                 })}
-            </div>
-            <input
-                className={'input'}
-                type="text"
-                placeholder={'Улица'}
-                value={street}
-                onChange={onChangeStreet}
-            />
-            <input
-                className={'input'}
-                type="text"
-                placeholder={'Дом'}
-                value={build}
-                onChange={onChangeBuild}
-            />
+            </ul>
         </div>
     );
 };
