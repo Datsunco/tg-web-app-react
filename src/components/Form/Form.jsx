@@ -11,19 +11,16 @@ const token = "14ff958eb194fcb4809c2f0661a7c8a2549d4cd1";
 
 const Form = () => {
     //document.querySelector("#address").addEventListener("change", onChangeCity);
-    const [city, setCity] = useState('');
-    const [street, setStreet] = useState('');
-    const [build, setBuild] = useState([]);
+    const [address, setAddress] = useState('');
     const [articles, setArticles] = useState([]);
+    const [isOpen, setIsOpen] = useState(true);
     const {tg} = useTelegram();
 
 
 
     const onSendData = useCallback( () => {
         const data = {
-            city,
-            street,
-            build,
+            address,
         }
         tg.sendData(JSON.stringify(data));
     }, [])
@@ -44,26 +41,26 @@ const Form = () => {
 
 
     useEffect(() => {
-        if (!street || !city || !build){
+        if (!address){
             tg.MainButton.hide();
         } else {
             tg.MainButton.show();
         }
-    }, [street,city,build])
+    }, [address])
 
     const onChangeCity = (e, index) => {
-        var city_text = '';
+        var address_text = '';
         //if Проверка на вызов функции из HTMl или из функции onClickAutoCompleteItem
         if (index === 1) {
-            city_text = e.target.textContent;
+            address_text = e.target.textContent;
         }
         else {
-            city_text = e.target.value
+            address_text = e.target.value
         }
         //end if
-        setCity(city_text);
+        setAddress(address_text);
 
-        const promise = suggest(city_text);
+        const promise = suggest(address_text);
         promise
             .then(function(response) {
                 return response.json();
@@ -91,17 +88,15 @@ const Form = () => {
         return fetch(url, params);
     }
 
-    const onChangeStreet = (e) => {
-        setStreet(e.target.value)
-    }
-
-    const onChangeBuild = (e) => {
-        setBuild(e.target.value)
-    }
 
     const onClickAutoCompleteItem = (e) =>{
-        setCity(e.target.textContent);
+        setAddress(e.target.textContent);
+        setIsOpen(!isOpen);
         onChangeCity(e, 1);
+    }
+
+    const onClickInput = () =>{
+        setIsOpen(true);
     }
 
     return (
@@ -112,18 +107,22 @@ const Form = () => {
                 className={'input'}
                 type="text"
                 placeholder={'Город'}
-                value={city}
+                value={address}
+                onClick={onClickInput}
                 onChange={(e) => onChangeCity(e,0)}
             />
             <ul className={"autoComplete"}>
-                {Object.keys(articles).map(article => {
+                {  isOpen
+                   ? Object.keys(articles).map(article => {
                     return(
                         <li className={"autoCompleteItem"}
                             onClick={onClickAutoCompleteItem}>
                             {articles[article]['value']}
                         </li>
-                    );
-                })}
+                        );
+                    })
+                    :null
+                }
             </ul>
         </div>
     );
