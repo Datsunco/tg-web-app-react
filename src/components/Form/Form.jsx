@@ -12,6 +12,7 @@ const token = "14ff958eb194fcb4809c2f0661a7c8a2549d4cd1";
 const Form = () => {
     //document.querySelector("#address").addEventListener("change", onChangeCity);
     const [address, setAddress] = useState('');
+    const [coordinates, setCoordinates] = useState('');
     const [articles, setArticles] = useState([]);
     const [isOpen, setIsOpen] = useState(true);
     const {tg} = useTelegram();
@@ -88,6 +89,10 @@ const Form = () => {
         return fetch(url, params);
     }
 
+    const onChangeCoordinates = (e) => {
+        setCoordinates(e.target.value);
+    }
+
 
     const onClickAutoCompleteItem = (e) =>{
         setAddress(e.target.textContent);
@@ -99,8 +104,11 @@ const Form = () => {
         setIsOpen(true);
     }
 
+    const onClickForm = () =>{
+    }
+
     return (
-        <div className={'form'}>
+        <div className={'form'} onClick={onClickForm} щтСДшсл>
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
             <h3>Введите ваши данные</h3>
             <input
@@ -125,6 +133,14 @@ const Form = () => {
                     :null
                 }
             </ul>
+            <input
+                id={'coordinates'}
+                className={'input'}
+                type="text"
+                placeholder={'Координаты'}
+                value={coordinates}
+                onChange={onChangeCoordinates}
+            />
         </div>
     );
 };
