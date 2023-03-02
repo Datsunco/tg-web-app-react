@@ -43,12 +43,12 @@ const Form = () => {
 
 
     useEffect(() => {
-        if (address || coordinates){
-            tg.MainButton.show();
-        } else {
+        if (!address && !coordinates){
             tg.MainButton.hide();
+        } else {
+            tg.MainButton.show();
         }
-    }, [address])
+    }, [address, coordinates])
 
     const onChangeCity = (e, index) => {
         var address_text = '';
