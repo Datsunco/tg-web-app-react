@@ -43,7 +43,7 @@ const Form = () => {
 
 
     useEffect(() => {
-        if (!address){
+        if (!address && !coordinates){
             tg.MainButton.hide();
         } else {
             tg.MainButton.show();
