@@ -107,7 +107,7 @@ const Form = () => {
                 id={'address'}
                 className={'input'}
                 type="text"
-                placeholder={'Город'}
+                placeholder={'Адрес'}
                 value={address}
                 onClick={onClickInput}
                 onChange={(e) => onChangeCity(e,0)}
