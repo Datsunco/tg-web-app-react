@@ -22,9 +22,10 @@ const Form = () => {
     const onSendData = useCallback( () => {
         const data = {
             address,
+            coordinates,
         }
         tg.sendData(JSON.stringify(data));
-    }, [address])
+    }, [address,coordinates])
 
     useEffect( () => {
         tg.onEvent('mainButtonClicked', onSendData)
